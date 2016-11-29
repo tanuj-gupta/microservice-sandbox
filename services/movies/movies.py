@@ -1,14 +1,18 @@
-from services import root_dir, nice_json
 from flask import Flask
 from werkzeug.exceptions import NotFound
 import json
-
+import os
+from flask import make_response
 
 app = Flask(__name__)
 
-with open("{}/database/movies.json".format(root_dir()), "r") as f:
-    movies = json.load(f)
+def nice_json(arg):
+    response = make_response(json.dumps(arg, sort_keys = True, indent=4))
+    response.headers['Content-type'] = "application/json"
+    return response
 
+with open("db/movies.json", "r") as f:
+    movies = json.load(f)
 
 @app.route("/", methods=['GET'])
 def hello():
@@ -37,5 +41,5 @@ def movie_record():
 
 
 if __name__ == "__main__":
-    app.run(port=5001, debug=True)
+    app.run(host="0.0.0.0", port=5001, debug=True)
 

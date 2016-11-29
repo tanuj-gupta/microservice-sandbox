@@ -8,7 +8,7 @@ RUN apt-get clean all
 
 RUN pip install Flask==0.11.1
 
-COPY bookings.py /opt/service/bookings.py
+COPY showtimes.py /opt/service/showtimes.py
 COPY db /opt/service/db
 
 # Copy supervisor config to start the service automatically
@@ -16,11 +16,11 @@ COPY supervisord.conf /etc/supervisor/supervisord.conf
 COPY service.conf /etc/supervisor/conf.d/service.conf
 
 # Create your logging directory if you are not sure its already created
-RUN mkdir -p /var/log/bookings
+RUN mkdir -p /var/log/showtimes
 RUN mkdir -p /var/log/supervisor
 
 # Flask Port
-EXPOSE 5003
+EXPOSE 5002
 
 # Start suypervisor service
 CMD ["/usr/bin/supervisord"]
